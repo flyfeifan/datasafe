@@ -1,3 +1,4 @@
+#include <iostream>
 #include <openssl/rsa.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
@@ -156,6 +157,7 @@ bool DataRsa::private_encrypt(const std::string& srcData, std::string& dstData)
 			CRYPTO_cleanup_all_ex_data();
 			 return false;
 		}
+	//	int l = strlen(dst_buff);
 		dstData.append(dst_buff, res);
 		memset(dst_buff, '\0', secdata_len + 1);
 	}
@@ -209,7 +211,8 @@ bool DataRsa::private_decrypt(const std::string& srcData, std::string& dstData)
 			CRYPTO_cleanup_all_ex_data();
 			return false;
 		}
-		dstData.append(dst_buff, ret);
+		int l = strlen(dst_buff);
+		dstData.append(dst_buff, l);
 		memset(dst_buff, '\0', secdata_len + 1);
 	}
 	CRYPTO_cleanup_all_ex_data();
@@ -254,6 +257,7 @@ bool DataRsa::public_encrypt(const std::string& srcData, std::string& dstData)
 			CRYPTO_cleanup_all_ex_data();
 			return false;
 		}
+		//int l = strlen(dst_buff);
 		dstData.append(dst_buff, res);
 		memset(dst_buff, '\0', secdata_len + 1);
 	}
@@ -303,7 +307,8 @@ bool DataRsa::public_decrypt(const std::string& srcData, std::string& dstData)
 			CRYPTO_cleanup_all_ex_data();
 			return false;
 		}
-		dstData.append(dst_buff, ret);
+		int l = strlen(dst_buff);
+		dstData.append(dst_buff, l);
 		memset(dst_buff, '\0', secdata_len + 1);
 	}
 	CRYPTO_cleanup_all_ex_data();
