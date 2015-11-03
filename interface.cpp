@@ -1,27 +1,24 @@
-//#include "interface.h"
+#include "interface.h"
 
-#include <iostream>
-#include <string>
 bool rsa_public_encrpyt_withkey(const std::string& publickey, const std::string& srcdata, std::string& dstdata)
 {
 	std::cout<<"1"<<std::endl;
 	return true;
 }
 
-bool rsa_public_encrypt(const std::string& srcdata, std::string& dstdata, std::string& privatekey, std::string& password)
+bool rsa_public_encrypt(const std::string& srcdata, const std::string& password, std::string& dstdata, std::string& privatekeyout)
 {
 	std::cout<<"2"<<std::endl;
 	return true;
 }
 
-bool rsa_private_encrypt(const std::string& privatekey, const std::string& passwordk,  const std::string& srcdata, std::string& dstdata)
+bool rsa_private_decrypt(const std::string& privatekey, const std::string& passwordk,  const std::string& srcdata, std::string& dstdata)
 {
 	std::cout<<"3"<<std::endl;
 	return true;
 }
 
-
-int test()
+std::string test( std::string str )
 {	
-	return 100;
+	return str + " : hello";
 }
