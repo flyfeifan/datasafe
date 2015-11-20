@@ -51,6 +51,48 @@ void DataRsa::pass_word(const std::string& pw)
 
 int DataRsa::getSecdataLen()
 {
+	if( !publickey.empty() && ( secdata_len <= 0 ))
+	{
+			OpenSSL_add_all_algorithms(); 
+			BIO* pBio = BIO_new( BIO_s_mem() );
+			BIO_write(pBio, publickey.c_str(), publickey.length());
+			RSA* public_rsa = PEM_read_bio_RSAPublicKey(pBio, NULL, NULL, NULL);
+			BIO_free_all(pBio);
+
+			if( NULL == public_rsa )
+			{
+					RSA_free(public_rsa);
+					CRYPTO_cleanup_all_ex_data();
+					return -1;
+			}
+
+			secdata_len = RSA_size(public_rsa);
+			RSA_free(public_rsa);
+			CRYPTO_cleanup_all_ex_data();
+
+
+	}
+	else if( !privatekey.empty() && !password.empty() && (secdata_len <= 0 ))
+	{
+			OpenSSL_add_all_algorithms();
+			BIO *pBio = BIO_new( BIO_s_mem() );
+			BIO_write(pBio, privatekey.c_str(), privatekey.length());
+
+			char pass[512];
+			memset(pass, '\0', 512);
+			snprintf(pass, 512, "%s", password.c_str());
+			RSA* private_rsa = PEM_read_bio_RSAPrivateKey(pBio, NULL, NULL, (unsigned char*)pass );
+			BIO_free_all(pBio);
+
+			if( NULL == private_rsa ){
+					RSA_free(private_rsa); 
+					CRYPTO_cleanup_all_ex_data();
+					return -1;
+			}
+			secdata_len =  RSA_size(private_rsa);
+			RSA_free(private_rsa); 
+			CRYPTO_cleanup_all_ex_data();		
+	}
 	return secdata_len;
 }
 
