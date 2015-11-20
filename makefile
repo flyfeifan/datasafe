@@ -18,3 +18,4 @@ clean:
 	rm -f *.so
 	rm -f *.cxx
 	rm -f *.pyc
+	rm -f *~
